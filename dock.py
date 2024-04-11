@@ -10,7 +10,7 @@ try:
     # https://stackoverflow.com/questions/37016946/remove-b-character-do-in-front-of-a-string-literal-in-python-3
     # remove '\n':
     # https://www.geeksforgeeks.org/python-string-strip/
-    out = text_example.decode("utf-8")
+    out = text_example.decode("utf-8").strip()
     print(out)
 # Found near the end of the run function in the manual:
 # https://docker-py.readthedocs.io/en/stable/containers.html#docker.models.containers.ContainerCollection.run
@@ -47,26 +47,3 @@ except docker.errors.APIError as e:
 #        pass  # This loop consumes the generator to trigger tqdm updates
 #except docker.errors.APIError as e:
 #    print(f"An error occurred: {e}")
-
-
-
-# check if docker is running, raise exception if false.
-# Or don't and just go through a bunch of files per step.
-
-"""
-Things one can do:
-list containers:
-client.containers.list()
-
-run containers:
-client.containers.run("ubuntu", "echo hello world")
-
-building containers:
-" docker build -t getting-started . " is the same as
-" client.images.build(path = "./", tag = "getting-started") "
-
-pulling:
-client.images.pull(fedora:39) doesn't work
-client.images.pull(platform="fedora:39") doesn't work
-client.images.pull("fedora:latest") DOES
-"""
