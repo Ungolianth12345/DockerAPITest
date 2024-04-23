@@ -54,3 +54,25 @@ def dock_ls():
 
 
 #dock_fedora()
+
+# Adapted from:
+# https://github.com/GonzagaCPSC322/U0-Introduction/blob/master/B%20Environment%20Setup.ipynb
+def dock_anaconda():
+    container_config = {
+        'image': 'continuumio/anaconda3:latest',
+        'name': 'Anaconda',
+        'ports': {'8888/tcp': 8888, '5000/tcp': 5000},
+        'volumes': {os.getcwd(): {'bind': '/home', 'mode': 'rw'}},
+        'detach': True,
+        'tty': True,
+        'stdin_open': True
+    }
+    #client.containers.run(**container_config)
+    
+    # You CANNOT create an interactive container, you must use this
+    os.system('docker start -ai "Anaconda"')
+    os.system('jupyter lab --ip="0.0.0.0" --port=8888 --no-browser --allow-root --notebook-dir=/home')
+    
+    #container.start()
+
+dock_anaconda()
