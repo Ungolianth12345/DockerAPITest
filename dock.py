@@ -67,11 +67,26 @@ def dock_anaconda():
         'tty': True,
         'stdin_open': True
     }
-    #client.containers.run(**container_config)
+    client.containers.run(**container_config)
+    
+    client.images.build(
+        path='.',  # Path to the build context directory
+        dockerfile="./Dockerfile",  # Path to the Dockerfile
+        tag='anaconda',  # Name your image 'anaconda'
+        rm=True,  # Remove intermediate containers
+        quiet=False
+    )
+    
+    client.containers.run(
+        'anaconda',  # Image name ('anaconda' in this case)
+        detach=True,  # Detach the container (equivalent to -d option)
+        ports={'8888/tcp': 8888},  # Port mapping (8888:8888)
+        name='Anaconda'  # Container name
+    )
     
     # You CANNOT create an interactive container, you must use this
-    os.system('docker start -ai "Anaconda"')
-    os.system('jupyter lab --ip="0.0.0.0" --port=8888 --no-browser --allow-root --notebook-dir=/home')
+    #os.system('docker start -ai "Anaconda"')
+    #os.system('jupyter lab --ip="0.0.0.0" --port=8888 --no-browser --allow-root --notebook-dir=/home')
     
     #container.start()
 
